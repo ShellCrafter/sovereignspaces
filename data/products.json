@@ -1,0 +1,23 @@
+[
+  {
+    "category":"mobile",
+    "name":"Samsung Galaxy S23",
+    "model":"S23 Ultra",
+    "price":"₹85,000",
+    "info":"12GB RAM, 256GB Storage",
+    "images":[
+      "assets/images/s23w.jpg",
+      "assets/images/s23.jpg"
+    ]
+  },
+  {
+    "category":"car",
+    "name":"BMW M4",
+    "model":"2022",
+    "price":"₹65,00,000",
+    "info":"Petrol · Automatic · 18k km",
+    "images":[
+      "assets/images/bmw.jpg"
+    ]
+  }
+]

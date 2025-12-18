@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOVEREIGN SPACES</title>
+  <style>
+    /* CSS Variables for Theme Switching */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #fff9fb, #f8f9fa, #f0fff4);
+      --text-primary: #4a2a3a;
+      --text-secondary: #5a2a4a;
+      --header-bg: rgba(255, 255, 255, 0.85);
+      --card-bg: white;
+      --img-box-bg: #fcf0f5;
+      --price-color: #8b0000;
+      --footer-color: #8b0000;
+      --border-color: rgba(255, 255, 255, 0.7);
+      --shadow-color-1: rgba(139, 0, 0, 0.12);
+      --shadow-color-2: rgba(46, 204, 113, 0.15);
+      --glow-color: rgba(236, 28, 81, 0.6);
+      --viewer-bg: rgba(255, 249, 251, 0.96);
+    }
+
+    .dark-theme {
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --text-primary: #e0d6ff;
+      --text-secondary: #d1c4e9;
+      --header-bg: rgba(25, 20, 45, 0.8);
+      --card-bg: #1d1b2f;
+      --img-box-bg: #2a273f;
+      --price-color: #00f7ff; /* Electric blue */
+      --footer-color: #00f7ff;
+      --border-color: rgba(100, 90, 180, 0.5);
+      --shadow-color-1: rgba(106, 90, 205, 0.3);
+      --shadow-color-2: rgba(0, 247, 255, 0.2);
+      --glow-color: rgba(0, 247, 255, 0.4); /* Reduced intensity */
+      --viewer-bg: rgba(15, 12, 41, 0.95);
+      color-scheme: dark;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Animated Mixed-Color Background */
+    .bg-enhancer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.12;
+      filter: blur(2px);
+    }
+
+    .shape-1 {
+      width: 400px;
+      height: 400px;
+      top: -150px;
+      left: -100px;
+      background: conic-gradient(from 0deg, #ff69b4, #2ecc71, #8b0000, #ff69b4);
+      animation: rotate 40s linear infinite;
+    }
+
+    .dark-theme .shape-1 {
+      background: conic-gradient(from 0deg, #00f7ff, #8a2be2, #ff69b4, #00f7ff);
+    }
+
+    .shape-2 {
+      width: 300px;
+      height: 300px;
+      bottom: -100px;
+      right: -80px;
+      background: radial-gradient(circle, #2ecc71, transparent 80%);
+      animation: pulse 8s infinite alternate;
+    }
+
+    .dark-theme .shape-2 {
+      background: radial-gradient(circle, #00f7ff, transparent 80%);
+    }
+
+    .shape-3 {
+      width: 200px;
+      height: 200px;
+      top: 40%;
+      right: 10%;
+      background: radial-gradient(circle, #8b0000, transparent 70%);
+      animation: float 18s infinite ease-in-out;
+    }
+
+    .dark-theme .shape-3 {
+      background: radial-gradient(circle, #8a2be2, transparent 70%);
+    }
+
+    .shape-4 {
+      width: 250px;
+      height: 250px;
+      bottom: 30%;
+      left: 15%;
+      background: radial-gradient(circle, #ff69b4, transparent 75%);
+      animation: float 22s infinite reverse ease-in-out;
+    }
+
+    .dark-theme .shape-4 {
+      background: radial-gradient(circle, #00f7ff, transparent 75%);
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.1; }
+      100% { transform: scale(1.1); opacity: 0.15; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(15px, -20px); }
+      50% { transform: translate(-10px, 15px); }
+      75% { transform: translate(10px, 10px); }
+    }
+
+    /* Header */
+    header {
+      padding: 40px 20px 50px;
+      text-align: center;
+      background: var(--header-bg);
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: visible; /* Critical fix */
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 4px 20px var(--shadow-color-1);
+      margin: 0 16px;
+      z-index: 2;
+    }
+
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ff69b4, #2ecc71, #8b0000);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 8px rgba(139, 0, 0, 0.1);
+      margin-bottom: 12px;
+      animation: titleShimmer 5s infinite linear;
+      position: relative;
+      z-index: 3; /* Above everything */
+    }
+
+
+    @keyframes titleShimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    header p {
+      opacity: 0.85;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    /* Navigation Buttons */
+    .top-bar, .top-contact {
+      position: fixed;
+      top: 28px;
+      z-index: 1000;
+    }
+    .top-bar { left: 28px; }
+    .top-contact { right: 28px; }
+
+    .nav-btn, .theme-toggle {
+      position: relative;
+      display: inline-block;
+      padding: 14px 38px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(135deg, #ff69b4, #8b0000);
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+    }
+
+    .dark-theme .nav-btn {
+      background: linear-gradient(135deg, #00f7ff, #8a2be2);
+      box-shadow: 0 4px 12px rgba(0, 247, 255, 0.3);
+    }
+
+    .nav-btn::before, .theme-toggle::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -70%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.85), transparent);
+      transform: rotate(30deg);
+      animation: flare 2.5s infinite;
+    }
+
+    @keyframes flare {
+      0% { left: -70%; }
+      100% { left: 180%; }
+    }
+
+    .nav-btn:hover, .theme-toggle:hover {
+      transform: scale(1.15) rotate(0.5deg);
+      box-shadow: 0 0 30px rgba(236, 28, 81, 0.8);
+    }
+
+    .dark-theme .nav-btn:hover, .dark-theme .theme-toggle:hover {
+      box-shadow: 0 0 30px rgba(0, 247, 255, 0.7);
+    }
+
+    /* Small Theme Toggle */
+    .theme-toggle {
+      padding: 12px 24px;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      margin-left: 12px;
+      box-shadow: 0 3px 10px rgba(139, 0, 0, 0.25);
+    }
+
+    .dark-theme .theme-toggle {
+      box-shadow: 0 3px 10px rgba(0, 247, 255, 0.25);
+    }
+
+    /* Product Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 32px;
+      padding: 60px 40px 50px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.3, 1);
+      box-shadow: 
+        0 5px 20px var(--shadow-color-1),
+        0 0 0 1px var(--shadow-color-2);
+      border: 2px solid var(--border-color);
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 
+        0 15px 40px rgba(236, 28, 81, 0.25),
+        0 0 0 1px rgba(46, 204, 113, 0.3);
+    }
+
+    .dark-theme .card:hover {
+      box-shadow: 
+        0 15px 40px rgba(0, 247, 255, 0.25),
+        0 0 0 1px rgba(138, 43, 226, 0.3);
+    }
+
+    .badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 7px 20px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: white;
+      background: linear-gradient(135deg, #2ecc71, #8b0000);
+      border-radius: 50px;
+      text-transform: uppercase;
+      z-index: 5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .dark-theme .badge {
+      background: linear-gradient(135deg, #00f7ff, #8a2be2);
+      box-shadow: 0 2px 6px rgba(0,0,0, 0.25);
+    }
+
+    .img-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--img-box-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 2px solid #f0f8f4;
+    }
+
+    .dark-theme .img-box {
+      border-bottom: 2px solid #3a3750;
+    }
+
+    .img-box img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover .img-box img {
+      transform: scale(1.12);
+    }
+
+    /* Slide Buttons - CORRECT POSITIONING */
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: 2px solid #ff69b4;
+      color: #8b0000;
+      font-size: 22px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .slide-btn.left {
+      left: 12px;
+    }
+
+    .slide-btn.right {
+      right: 12px;
+    }
+
+    .slide-btn:hover {
+      background: #2ecc71;
+      color: white;
+      transform: translateY(-50%) scale(1.2);
+      box-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+      border-color: #2ecc71;
+    }
+
+    .dark-theme .slide-btn {
+      background: #1d1b2f;
+      border-color: #00f7ff;
+      color: #00f7ff;
+    }
+
+    .dark-theme .slide-btn:hover {
+      background: #00f7ff;
+      color: #0a081f;
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.8);
+      border-color: #00f7ff;
+    }
+
+    .card-content {
+      padding: 22px;
+    }
+
+    .card-content h4 {
+      color: var(--text-primary);
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .price {
+      color: var(--price-color);
+      font-weight: 900;
+      font-size: 1.25rem;
+      margin-top: 8px;
+      text-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
+    }
+
+    .dark-theme .price {
+      text-shadow: 0 0 12px rgba(0, 247, 255, 0.4);
+    }
+
+    /* Fullscreen Viewer */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      background: var(--viewer-bg);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+    }
+
+    .viewer img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 
+        0 0 40px rgba(236, 28, 81, 0.4),
+        inset 0 0 0 2px white;
+    }
+
+    .dark-theme .viewer img {
+      box-shadow: 
+        0 0 40px rgba(0, 247, 255, 0.4),
+        inset 0 0 0 2px #2a273f;
+    }
+
+    .viewer button {
+      position: absolute;
+      background: var(--card-bg);
+      border: 2px solid #2ecc71;
+      color: #8b0000;
+      font-size: 36px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .dark-theme .viewer button {
+      border-color: #00f7ff;
+      color: #00f7ff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .viewer button:hover {
+      background: #ff69b4;
+      color: white;
+      transform: scale(1.2);
+      box-shadow: 0 0 25px rgba(236, 28, 81, 0.8);
+      border-color: #ff69b4;
+    }
+
+    .dark-theme .viewer button:hover {
+      background: #8a2be2;
+      color: #e0d6ff;
+      box-shadow: 0 0 25px rgba(0, 247, 255, 0.7);
+      border-color: #8a2be2;
+    }
+
+    .close { top: 30px; right: 30px; }
+    .prev { left: 30px; top: 50%; }
+    .next { right: 30px; top: 50%; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: var(--footer-color);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      border-top: 1px solid var(--glow-color);
+      background: var(--card-bg);
+      margin: 0 16px;
+      border-radius: 12px 12px 0 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .grid { padding: 50px 25px; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-btn, .theme-toggle { padding: 12px 24px; font-size: 0.8rem; }
+      .top-bar, .top-contact { top: 20px; left: 16px; }
+      .top-contact { right: 16px; }
+      header { padding: 30px 15px 40px; margin: 0 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Enhanced Animated Background -->
+<div class="bg-enhancer">
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+  <div class="bg-shape shape-4"></div>
+</div>
+
+<!-- Navigation -->
+<div class="top-bar">
+  <a href="about.html" class="nav-btn">ABOUT US</a>
+  <button id="themeToggle" class="theme-toggle">🌙</button>
+</div>
+<div class="top-contact">
+  <a href="contact.html" class="nav-btn">CONTACT</a>
+</div>
+
+<header>
+  <h1>SOVEREIGN SPACES</h1>
+  <p>Cars & Mobiles – Direct Owner Sales</p>
+</header>
+
+<div class="grid" id="productGrid"></div>
+
+<footer>© 2025 Sovereign Spaces — Precision. Trust. Excellence.</footer>
+
+<!-- Viewer -->
+<div class="viewer" id="viewer">
+  <button class="close" onclick="closeViewer()">✕</button>
+  <button class="prev" onclick="prevImg()">‹</button>
+  <img id="viewerImg" />
+  <button class="next" onclick="nextImg()">›</button>
+</div>
+
+<script>
+  // Theme Toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Check for saved theme preference or respect OS setting
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    body.classList.add('dark-theme');
+    themeToggle.textContent = '☀️';
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    if (body.classList.contains('dark-theme')) {
+      themeToggle.textContent = '☀️';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      themeToggle.textContent = '🌙';
+      localStorage.setItem('theme', 'light');
+    }
+  });
+
+  // Original product logic
+  let currentImages = [], currentIndex = 0;
+
+  fetch('data/products.json')
+    .then(res => res.json())
+    .then(products => render(products))
+    .catch(() => {
+      document.getElementById('productGrid').innerHTML = '<p style="opacity:.7;text-align:center;color:var(--footer-color)">Failed to load products.</p>';
+    });
+
+  function render(products) {
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
+
+    if (!products?.length) {
+      grid.innerHTML = '<p style="opacity:.7;text-align:center;color:var(--footer-color)">No products available.</p>';
+      return;
+    }
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const box = document.createElement('div');
+      box.className = 'img-box';
+
+      const badge = document.createElement('div');
+      badge.className = 'badge';
+      badge.textContent = p.category?.toUpperCase() || 'ITEM';
+      box.appendChild(badge);
+
+      let idx = 0;
+      const img = document.createElement('img');
+      img.src = p.images?.[0] || '';
+      img.alt = p.name || 'Product';
+      img.onclick = () => openViewer(p.images || [img.src], idx);
+
+      const left = document.createElement('button');
+      left.className = 'slide-btn left';
+      left.innerHTML = '‹';
+      left.onclick = e => {
+        e.stopPropagation();
+        if (!p.images || p.images.length < 2) return;
+        idx = (idx - 1 + p.images.length) % p.images.length;
+        img.src = p.images[idx];
+      };
+
+      const right = document.createElement('button');
+      right.className = 'slide-btn right';
+      right.innerHTML = '›';
+      right.onclick = e => {
+        e.stopPropagation();
+        if (!p.images || p.images.length < 2) return;
+        idx = (idx + 1) % p.images.length;
+        img.src = p.images[idx];
+      };
+
+      if (!p.images || p.images.length < 2) {
+        left.style.display = 'none';
+        right.style.display = 'none';
+      }
+
+      box.appendChild(left);
+      box.appendChild(img);
+      box.appendChild(right);
+
+      const content = document.createElement('div');
+      content.className = 'card-content';
+      content.innerHTML = `
+        <h4>${p.name || 'Unnamed'}</h4>
+        <div style="color:var(--text-secondary); opacity:0.9; margin:6px 0; font-weight:500;">${p.model || ''}</div>
+        <div class="price">${p.price || 'Price not listed'}</div>
+        <p style="opacity:.85;font-size:.92rem;color:var(--text-secondary);margin-top:10px;">${p.info || ''}</p>
+      `;
+
+      card.appendChild(box);
+      card.appendChild(content);
+      grid.appendChild(card);
+    });
+  }
+
+  function openViewer(images, i) {
+    currentImages = images;
+    currentIndex = i;
+    viewerImg.src = images[i];
+    viewer.style.display = 'flex';
+  }
+
+  function closeViewer() {
+    viewer.style.display = 'none';
+  }
+
+  function nextImg() {
+    if (currentImages.length <= 1) return;
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    viewerImg.src = currentImages[currentIndex];
+  }
+
+  function prevImg() {
+    if (currentImages.length <= 1) return;
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    viewerImg.src = currentImages[currentIndex];
+  }
+</script>
+
+</body>
+</html>

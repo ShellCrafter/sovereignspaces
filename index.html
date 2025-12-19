@@ -499,12 +499,39 @@
       .grid { padding: 50px 25px; }
     }
 
-    @media (max-width: 480px) {
-      .nav-btn, .theme-toggle { padding: 12px 24px; font-size: 0.8rem; }
-      .top-bar, .top-contact { top: 20px; left: 16px; }
-      .top-contact { right: 16px; }
-      header { padding: 30px 15px 40px; margin: 0 8px; }
-    }
+@media (max-width: 480px) {
+
+  /* FIX: stop buttons overlapping header */
+  .top-bar,
+  .top-contact {
+    position: static !important;
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .top-bar {
+    gap: 10px;
+  }
+
+  .top-contact {
+    margin-bottom: 10px;
+  }
+
+  /* Header spacing */
+  header {
+    margin-top: 10px !important;
+    padding: 30px 15px 40px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .nav-btn,
+  .theme-toggle {
+    padding: 12px 22px;
+    font-size: 0.8rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -676,4 +703,5 @@
 </script>
 
 </body>
+
 </html>
